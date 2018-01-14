@@ -19,6 +19,16 @@ class Robot(object):
                           maze_dim/2, maze_dim/2]
         self.exploring = True
         self.environment = {}
+        self.time_step = 0
+        
+        random.seed(0)
+    
+    def check_goal(self, loc):
+        '''
+        Function checks if the robot is within the maze goal area. Returns True
+        if the Robot is within goal, else returns False
+        '''
+        return loc in self.goal_area
     
     def next_move(self, sensors):
         '''
