@@ -13,7 +13,13 @@ class Robot(object):
         self.location = [0, 0]
         self.heading = 'up'
         self.maze_dim = maze_dim
-
+        self.goal_area = [maze_dim/2 - 1, maze_dim/2 - 1,
+                          maze_dim/2 - 1, maze_dim/2,
+                          maze_dim/2, maze_dim/2 - 1,
+                          maze_dim/2, maze_dim/2]
+        self.exploring = True
+        self.environment = {}
+    
     def next_move(self, sensors):
         '''
         Use this function to determine the next move the robot should make,
