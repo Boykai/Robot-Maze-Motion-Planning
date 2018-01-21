@@ -2,6 +2,7 @@ from maze import Maze
 import turtle
 import sys
 from robot import Robot
+import time
 
 class ShowRobot(object):
     '''
@@ -16,9 +17,9 @@ class ShowRobot(object):
         '''
         # Intialize the maze dimensions from txt file.
         # Maze is centered on (0,0), squares are 20 units in length.
-        self.test_maze = test_maze
+        self.test_maze = Maze(test_maze)
         self.sq_size = 20
-        self.origin = test_maze.dim * self.sq_size / -2
+        self.origin = self.test_maze.dim * self.sq_size / -2
 
         # Intialize the window and drawing turtle.
         self.window = turtle.Screen()
@@ -26,6 +27,7 @@ class ShowRobot(object):
         self.env.speed(0)
         self.env.hideturtle()
         self.env.penup()
+        
         
     def start_maze(self):
         '''
@@ -45,7 +47,7 @@ class ShowRobot(object):
                     self.env.forward(self.sq_size)
                     self.env.penup()
     
-                if not self.testmaze.is_permissible([x,y], 'right'):
+                if not self.test_maze.is_permissible([x,y], 'right'):
                     self.env.goto(self.origin + self.sq_size * (x+1),
                                   self.origin + self.sq_size * y)
                     self.env.setheading(90)
@@ -68,5 +70,42 @@ class ShowRobot(object):
                                self.origin + self.sq_size * y)
                     self.env.setheading(90)
                     self.env.pendown()
-                    self.env.forward(sq_size)
+                    self.env.forward(self.sq_size)
                     self.env.penup()
+                    
+                    
+    def draw_robot_action(self, loc):
+        '''
+        Creates a square fill for every environment position explored by robot
+        agent and draws it onto the Turtle maze environment display.
+        '''
+        self.env.goto(self.origin + loc[0] * self.sq_size + 0.75, 
+                      self.origin + loc[1] * self.sq_size + 0.75)
+        self.env.setheading(90)
+        self.env.begin_fill()
+        self.env.pendown()
+        self.env.pencolor('green')
+        self.env.fillcolor('green')
+        self.env.forward(18)
+        self.env.right(90)
+        self.env.forward(18)
+        self.env.right(90)
+        self.env.forward(18)
+        self.env.right(90)
+        self.env.forward(18)
+        self.env.penup()
+        self.env.end_fill()
+        
+        time.sleep(1)
+
+        
+if __name__ == '__main__':
+    '''
+    This function uses Python's turtle library to draw a picture of the maze
+    given as an argument when running the script.
+    '''
+    display = ShowRobot('test_maze_01.txt')
+    display.start_maze()
+    display.draw_robot_action([0, 0])
+    
+    display.window.exitonclick()
