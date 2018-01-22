@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import time 
 
 class Robot(object):
     def __init__(self, maze_dim):
@@ -9,7 +10,6 @@ class Robot(object):
         provided based on common information, including the size of the maze
         the robot is placed in.
         '''
-
         self.location = [0, 0]
         self.heading = 'up'
         self.maze_dim = maze_dim
@@ -22,7 +22,8 @@ class Robot(object):
         self.time_step = 0
         
         random.seed(0)
-    
+
+        
     def check_goal(self, loc):
         '''
         Function checks if the robot is within the maze goal area. Returns True
@@ -30,6 +31,7 @@ class Robot(object):
         '''
         return loc in self.goal_area
     
+        
     def next_move(self, sensors):
         '''
         Use this function to determine the next move the robot should make,
@@ -54,5 +56,6 @@ class Robot(object):
 
         rotation = 0
         movement = 0
-
+       
+        
         return rotation, movement

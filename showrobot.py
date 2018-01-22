@@ -96,7 +96,7 @@ class ShowRobot(object):
         self.env.penup()
         self.env.end_fill()
         
-        time.sleep(1)
+        time.sleep(0.01)
 
         
 if __name__ == '__main__':
@@ -104,8 +104,7 @@ if __name__ == '__main__':
     This function uses Python's turtle library to draw a picture of the maze
     given as an argument when running the script.
     '''
-    display = ShowRobot('test_maze_01.txt')
+    display = ShowRobot('test_maze_02.txt')
     display.start_maze()
-    display.draw_robot_action([0, 0])
-    
+
     display.window.exitonclick()
