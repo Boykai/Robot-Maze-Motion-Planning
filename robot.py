@@ -31,6 +31,23 @@ class Robot(object):
         '''
         return loc in self.goal_area
     
+    def explore_path(self, sensors):
+    
+        rotation = 0
+        movement = 1
+        sensor_arr = np.array(sensors)
+        rotation_arr = [-90, 0, 90]
+        longest = np.amax(sensor_arr)
+        
+        for i in range(len(sensor_arr)):
+            if sensors[i] == longest:
+                rotation = rotation_arr[i]
+                if sensor_arr[i] >= 3:
+                    movement = 3
+                else:
+                    movement = sensor_arr[i]
+                    
+        return rotation, movement
         
     def next_move(self, sensors):
         '''
@@ -53,9 +70,9 @@ class Robot(object):
         the maze) then returing the tuple ('Reset', 'Reset') will indicate to
         the tester to end the run and return the robot to the start.
         '''
-
         rotation = 0
         movement = 0
-       
-        
+
+        rotation, movement = self.explore_path(sensors)
+
         return rotation, movement
