@@ -50,12 +50,22 @@ class Robot(object):
         random.seed(0)
 
         
-    def check_goal(self, loc):
+    def check_goal(self, location):
         '''
         Function checks if the robot is within the maze goal area. Returns True
         if the Robot is within goal, else returns False
+
+        :param location: the location of the robot (a list of ints, i.e. [0, 0])
+        :return: True, if the location is within the goal. False, if the location is not within the goal. (a bool)
         '''
-        return loc in self.goal_area
+        assert len(location) == 2
+        assert location[0] >= 0
+        assert location[1] >= 0
+        assert location[0] < self.maze_dim
+        assert location[1] < self.maze_dim
+
+        return location in self.goal_area
+
     
     def explore_path(self, sensors):
     
