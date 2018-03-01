@@ -1,6 +1,10 @@
 import numpy as np
 import random
-import time 
+import time
+import math
+import pprint
+import operator
+
 
 class Robot(object):
     def __init__(self, maze_dim):
@@ -9,18 +13,40 @@ class Robot(object):
         will use to learn and navigate the maze. Some initial attributes are
         provided based on common information, including the size of the maze
         the robot is placed in.
+
+        :param maze_dim: the location of the robot (an int, 14 <= maze_dim <= 16 and is even, i.e. 14)
+        :return: NULL
         '''
-        self.location = [0, 0]
-        self.heading = 'up'
+        # Maze dimentional variables
         self.maze_dim = maze_dim
-        self.goal_area = [maze_dim/2 - 1, maze_dim/2 - 1,
-                          maze_dim/2 - 1, maze_dim/2,
-                          maze_dim/2, maze_dim/2 - 1,
-                          maze_dim/2, maze_dim/2]
+        self.goal_area = [[maze_dim / 2 - 1, maze_dim / 2 - 1],
+                          [maze_dim / 2 - 1, maze_dim / 2],
+                          [maze_dim / 2, maze_dim / 2 - 1],
+                          [maze_dim / 2, maze_dim / 2]]
+
+        # Exploration variables
         self.exploring = True
+        self.location = [0, 0]
+        self.locations_visited = []
+        self.new_location_time_step = 0
+        self.max_repeated_locations = maze_dim
+        self.random_actions = 0
+
+        # Directional variables
+        self.heading = 'north'
+        self.turns = ['left', 'forward', 'right']
+        self.cardinal_dirctions = ['north', 'east', 'south', 'west']
+
+        # Q-Learning variables
         self.environment = {}
+        self.state_space = dict()
+        self.learned_state_space = dict()
+
+        # Shared variables
         self.time_step = 0
-        
+        self.turn_around = 0
+
+        # Initalize random seed
         random.seed(0)
 
         
